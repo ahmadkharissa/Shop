@@ -11,6 +11,7 @@ async function getData(token) {
             firstName: userData.data.firstName,
             lastName: userData.data.lastName,
             email: userData.data.email,
+            phone: userData.data.phone,
             role: userData.data.role,
             avatar: userData.data.avatar,
             verified: userData.data.verified,

@@ -16,11 +16,12 @@ function Signup() {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
     const [password, setPassword] = useState("")
 
     const handelSubmit = (e) => {
         e.preventDefault()
-        const data = { firstName, lastName, email, password };
+        const data = { firstName, lastName, email, phone, password };
         dispatch(signup(data))
     }
 
@@ -37,6 +38,11 @@ function Signup() {
     const handelChangeEmail = (e) => {
         e.preventDefault()
         setEmail(e.target.value)
+    }
+
+    const handelChangePhone = (e) => {
+        e.preventDefault()
+        setPhone(e.target.value)
     }
 
     const handelChangePassword = (e) => {
@@ -56,6 +62,8 @@ function Signup() {
                 <input type="text" placeholder="Enter Last Name" name="lastname" required onChange={handelChangeLName} />
                 <label htmlFor="email"><b>Email</b></label>
                 <input type="email" placeholder="Enter Email" name="email" required onChange={handelChangeEmail} />
+                <label htmlFor="phone"><b>Phone</b></label>
+                <input type="phone" placeholder="Enter Phone" name="phone" required onChange={handelChangePhone} />
                 <label htmlFor="password"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="password" required onChange={handelChangePassword} />
                 <div style={{textAlign: "center"}}>

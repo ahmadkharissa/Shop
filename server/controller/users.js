@@ -41,11 +41,35 @@ export const login = async (req, res) => {
 
             const token = createToken({ id: user._id, email, role: user.role });
 
+            if (!user.verified) {
+                const transporter = nodeMailer.createTransport({
+                    service: "gmail",
+                    type: "SMTP",
+                    host: "smtp.gmail.com",
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD,
+                    },
+                });
+
+                const mailOptions = {
+                    from: process.env.EMAIL,
+                    to: email,
+                    subject: "Please verify your email",
+                    html: process.env.DOMAIN + "/verifyEmail?token=" + token,
+                };
+
+                transporter.sendMail(mailOptions, (err, info) => { });
+
+                return res.status(200).json({ message: "verify Email" });
+            }
+
             return res.status(200).json({
                 result: {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
+                    phone: user.phone,
                     role: user.role,
                 },
                 token,
@@ -57,7 +81,7 @@ export const login = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, phone, password } = req.body;
 
     try {
         const user = await User.findOne({ email });
@@ -65,8 +89,17 @@ export const signup = async (req, res) => {
             return res.status(400).json({ message: "Email exist." });
         if (password.length <= 8)
             return res.status(400).json({ message: "Password must be greater then 8." });
+
         const hashedPassword = await bcrypt.hash(password, 10);
-        const token = createToken({ firstName, lastName, email, password: hashedPassword, role: 2 });
+        const newUser = await User.create({
+            firstName,
+            lastName,
+            email,
+            phone,
+            password: hashedPassword
+        });
+
+        const token = createToken({ id: newUser._id, email, role: 2 });
         const transporter = nodeMailer.createTransport({
             service: "gmail",
             type: "SMTP",
@@ -94,16 +127,10 @@ export const signup = async (req, res) => {
 
 export const verifyEmail = async (req, res) => {
     const token = req.query.token;
-    const decod = decodeToken(token)
-    const newUser = await User.create({
-        firstName: decod.firstName,
-        lastName: decod.lastName,
-        email: decod.email,
-        password: decod.password,
-        role: decod.role
-    });
+    const decod = decodeToken(token);
+    const user = await User.findOne({ _id: decod.id });
 
-    newUser.verified = true;
+    user.verified = true;
     await newUser.save();
 
     return res.status(200).json({ result: "your email has been verified" });
@@ -183,7 +210,7 @@ export const getUser = async (req, res) => {
 }
 
 export const create = async (req, res) => {
-    const { firstName, lastName, email, password, role } = req.body;
+    const { firstName, lastName, email, phone, password, role } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -191,6 +218,7 @@ export const create = async (req, res) => {
             firstName,
             lastName,
             email,
+            phone,
             password: hashedPassword,
             role
         });
@@ -254,9 +282,11 @@ export const addToWishList = async (req, res) => {
     try {
         const user_id = req.userData.id;
         const user = await User.findById(user_id);
-        if (!user) return res.status(400).json({ message: "User doesn't exist" });
 
-        if (user.wishlist.find((product) => product === req.body.product))
+        if (!user)
+            return res.status(400).json({ message: "User doesn't exist" });
+
+        if (user.wishlist.find((product) => product.toString() === req.body.product))
             return res.status(400).json({ message: "product already in the wishlist" });
 
         user.wishlist.push(req.body.product);
@@ -286,6 +316,24 @@ export const removeFromWishList = async (req, res) => {
         await user.save();
 
         return res.status(200).json({ message: "Wishlist remove successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const removeAllWishList = async (req, res) => {
+    let wishlis = [];
+    try {
+        const user_id = req.userData.id;
+        const user = await User.findById(user_id);
+
+        if (!user)
+            return res.status(400).json({ message: "User doesn't exist" });
+
+        user.wishlist = wishlis;
+        await user.save();
+
+        return res.status(200).json({ message: "Wishlist is empty" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

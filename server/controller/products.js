@@ -76,7 +76,7 @@ export const deleteImage = async (req, res) => {
             return res.status(400).json({ message: "product doesn't exist" });
 
         const imageExist = product.images.filter((im) => im == image).length;
-        if (imageExist == 0)
+        if (imageExist === 0)
             return res.status(400).json({ message: "img doesnt exist" });
 
         product.images.pull(image);

@@ -25,8 +25,8 @@ function Profile() {
             <div className="card" style={{ borderRadius: "1.25rem" }}>
                 {user.avatar && <img src={process.env.REACT_APP_API + '/users/' + user.avatar} alt={user.lastName} style={{ width: "100%" }} />}
                 <h1>{user.firstName + ' ' + user.lastName}</h1>
-                <p className="title">{user.firstName}</p>
                 <p>{user.email}</p>
+                <p>{user.phone}</p>
                 <div style={{ margin: "5%" }}>
                     <a target="_blank" rel="noreferrer" href={"https://www.facebook.com/ahmadkharissa"}><i className="bi bi-facebook"></i></a>
                     <a target="_blank" rel="noreferrer" href={"https://www.instagram.com/ahmadkharissa/"}><i className="bi bi-instagram"></i></a>

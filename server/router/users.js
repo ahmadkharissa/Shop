@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 
 //controller
-import { getUsers, getUser, editUser, deleteUser, updateImage, addToWishList, removeFromWishList } from "../controller/users"
+import { getUsers, getUser, editUser, deleteUser, updateImage, addToWishList, removeFromWishList, removeAllWishList } from "../controller/users"
 
 //middleware
 import adminAuth from "../middleware/adminAuth";
@@ -24,5 +24,6 @@ router.put('/:id', userAuth, editUser);
 router.delete('/:id', adminAuth, deleteUser)
 router.post("/addToWishlist", userAuth, addToWishList);
 router.post("/removeFromWishList", userAuth, removeFromWishList);
+router.delete("/removeAllWishList", userAuth, removeAllWishList);
 
 export default router
