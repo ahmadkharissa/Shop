@@ -1,0 +1,31 @@
+input[type=email],
+input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid silver;
+    box-sizing: border-box;
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+img.avatar {
+    width: 25%;
+    border-radius: 50%;
+}
+
+.login {
+    width: 100% !important;
+}
+
+.error {
+    color: red;
+}
+
+.response {
+    color: green;
+}

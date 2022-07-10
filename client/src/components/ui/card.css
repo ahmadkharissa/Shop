@@ -1,0 +1,12 @@
+.card {
+    padding: 1rem;
+    min-height: 25rem;
+}
+
+.price {
+    color: red;
+}
+
+.no-bg{
+    background-color: transparent !important;
+}
