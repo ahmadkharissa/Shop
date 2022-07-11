@@ -9,6 +9,7 @@
 
 ul {
     margin-top: auto !important;
+    margin-right: 2rem !important;
 }
 
 .navbar .ul-list {
@@ -26,23 +27,16 @@ ul {
     display: block;
     color: white;
     text-decoration: none;
-    padding: 10px 15px 10px 5px;
+    padding: 10px 15px;
+    text-align: center;
 }
 
 .navbar .ul-list .list-item a:hover {
     color: var(--blue)
 }
 
-.login-w {
-    width: 11%;
-}
-
-.signup-w {
-    width: 13%;
-}
-
-.cart {
-    width: 15%;
+.cart-h {
+    width: 7rem;
 }
 
 .badge {
@@ -89,9 +83,7 @@ ul {
         border-top: 1px solid white;
     }
 
-    .login,
-    .signup,
-    .cart {
+    .cart-h {
         width: 100%;
     }
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 //components
 import { socket } from "../../App.jsx";
@@ -11,6 +12,7 @@ import { getNotifications } from '../../redux/notification/notificationAction.js
 import './home.css'
 
 function Home() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     if (socket)
@@ -19,7 +21,8 @@ function Home() {
         });
 
     const handelclick = () => {
-        socket.emit("getNotifications")
+        // socket.emit("getNotifications")
+        navigate("/Category")
     }
 
     return (

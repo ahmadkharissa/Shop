@@ -119,7 +119,16 @@ export const signup = async (req, res) => {
 
         transporter.sendMail(mailOptions, (err, info) => { });
 
-        return res.status(200).json({ message: "verify Email" });
+        return res.status(200).json({
+            result: {
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
+                email: newUser.email,
+                phone: newUser.phone,
+                role: newUser.role,
+            },
+            token,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

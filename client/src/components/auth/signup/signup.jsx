@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 //redux
 import { signup } from "../../../redux/user/userActions";
 
 //utils
-import Default from "../../../assets/images/default.png"
+import Default from "../../../assets/default.png"
 
 //css
 import './signup.css'
 
 function Signup() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { errorSignup, responseSignup } = useSelector((state) => state.users)
+    const { errorSignup } = useSelector((state) => state.users)
+    const { isAuthenticated } = useSelector((state) => state.users);
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
@@ -50,8 +53,13 @@ function Signup() {
         setPassword(e.target.value)
     }
 
+    useEffect(() => {
+        if (isAuthenticated)
+            navigate('/');
+    }, [isAuthenticated]);
+
     return (
-        <div className="container" style={{marginBottom: "5%"}}>
+        <div className="container" style={{ marginBottom: "5%" }}>
             <form onSubmit={handelSubmit}>
                 <div className="imgcontainer">
                     <img src={Default} alt="Avatar" className="avatar" />
@@ -66,12 +74,9 @@ function Signup() {
                 <input type="phone" placeholder="Enter Phone" name="phone" required onChange={handelChangePhone} />
                 <label htmlFor="password"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="password" required onChange={handelChangePassword} />
-                <div style={{textAlign: "center"}}>
+                <div style={{ textAlign: "center" }}>
                     <p className="error">
                         {errorSignup}
-                        <span className="response">
-                            {responseSignup}
-                        </span>
                     </p>
                     <button className="btn btn-primary signup" type="submit">Signup</button>
                 </div>

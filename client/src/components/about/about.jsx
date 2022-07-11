@@ -1,7 +1,7 @@
 import React from "react"
 
 //assets
-import Developer from '../../assets/images/developer.JPG'
+import Developer from '../../assets/developer.JPG'
 //css
 import './about.css'
 

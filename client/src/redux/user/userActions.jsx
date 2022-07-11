@@ -22,10 +22,15 @@ export const login = (data) => async (dispatch) => {
 };
 
 export const signup = (data) => async (dispatch) => {
+  var user = {};
   dispatch({ type: SIGNUP_REQUEST });
   try {
     const res = await axios.post(process.env.REACT_APP_API + '/signup', data);
-    dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
+    localStorage.setItem("token", res.data.token);
+    getData(res.data.token).then(response => {
+      user = response;
+      dispatch({ type: LOGIN_SUCCESS, payload: user });
+    });
   } catch (error) {
     dispatch({ type: SIGNUP_FAIL, payload: error.response.data.message });
   }

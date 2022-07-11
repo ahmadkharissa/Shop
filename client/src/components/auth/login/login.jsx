@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { forgetPassword, login } from "../../../redux/user/userActions";
 
 //utils
-import Default from "../../../assets/images/default.png"
+import Default from "../../../assets/default.png"
 
 //css
 import "./login.css"
@@ -67,7 +67,7 @@ function Login() {
         </div>
       </form>
       <div style={{ textAlign: "center" }}>
-        <a rel="noreferrer" onClick={handelClickForgetPassword}>Forgot password?</a>
+        <a rel="noreferrer" onClick={handelClickForgetPassword}>Forgot password? <i className="bi bi-unlock"></i></a>
       </div>
     </div>
   );
