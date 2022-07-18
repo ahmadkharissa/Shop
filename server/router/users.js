@@ -24,6 +24,6 @@ router.put('/:id', userAuth, editUser);
 router.delete('/:id', adminAuth, deleteUser)
 router.post("/addToWishlist", userAuth, addToWishList);
 router.post("/removeFromWishList", userAuth, removeFromWishList);
-router.delete("/removeAllWishList", userAuth, removeAllWishList);
+router.patch("/removeAllWishList", userAuth, removeAllWishList);
 
 export default router

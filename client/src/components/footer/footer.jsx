@@ -13,8 +13,7 @@ function Footer() {
                 <h3>Company<span>logo</span></h3>
                 <p className="footer-links">
                     <NavLink to="/" className="link-1">Home</NavLink>
-                    <NavLink to="/">About</NavLink>
-                    <NavLink to="/">Contact</NavLink>
+                    <NavLink to="/About">About</NavLink>
                 </p>
                 <p className="footer-company-name">Company Name © 2015</p>
             </div>
