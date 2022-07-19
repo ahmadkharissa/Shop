@@ -36,7 +36,8 @@ function Login() {
 
   const handelClickForgetPassword = (e) => {
     e.preventDefault()
-    dispatch(forgetPassword("ahmadharissa25@gmail.com"))
+    const enter = window.prompt("Enter Email")
+    dispatch(forgetPassword(enter))
   }
 
   useEffect(() => {
@@ -67,7 +68,7 @@ function Login() {
         </div>
       </form>
       <div style={{ textAlign: "center" }}>
-        <a rel="noreferrer" onClick={handelClickForgetPassword}>Forgot password? <i className="bi bi-unlock"></i></a>
+        <a rel="noreferrer" onClick={handelClickForgetPassword} style={{cursor: 'pointer'}}>Forgot password? <i className="bi bi-unlock"></i></a>
       </div>
     </div>
   );
